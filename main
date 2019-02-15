@@ -1,0 +1,892 @@
+//INPUTS:
+
+//total COIN amount of each coin
+let amtRED = 0;
+let amtBLU = 0;
+let amtYEL = 0;
+
+//COIN value at time purchase was made
+let psRED = 0;
+let psBLU = 0;
+let psYEL = 0;
+
+//current market value of coin when considering buying/selling
+let cmvRED = 3000.00;
+let cmvBLU = 150.00;
+let cmvYEL = 0.15;
+
+//other factors for 'totalFunds'
+let trustFund = 100;
+let cashVal = 900;
+
+let lvlUp;
+
+//CALCULATIONS:
+
+//total CASH amount of each coin
+let valRED = cmvRED * amtRED;
+let valBLU = cmvBLU * amtBLU;
+let valYEL = cmvYEL * amtYEL;
+
+//total CASH account balance
+let totalFunds = valRED + valBLU + valYEL + trustFund + cashVal;
+let totalProfit = 0;
+
+//percentage of CASH account balance for each coin.
+let pctRED = (valRED / totalFunds) * 100;
+let pctBLU = (valBLU / totalFunds) * 100;
+let pctYEL = (valYEL / totalFunds) * 100;
+let pcttrust = (trustFund / totalFunds) * 100;
+let pctCash = (cashVal / totalFunds) * 100;
+
+class Player {
+  constructor(playerName, playerHP, playerATK, playerDEF, playerLUK, playerMGC, playerSPD, playerEXP, playerLVL) {
+    this.playerName = playerName;
+    this.playerHP = playerHP;
+    this.playerATK = playerATK;
+    this.playerDEF = playerDEF;
+    this.playerLUK = playerLUK;
+    this.playerMGC = playerMGC;
+    this.playerSPD = playerSPD;
+    this.playerEXP = playerEXP;
+    this.playerLVL = playerLVL;
+  }
+
+  get name() {
+    return this.calcName();
+  }
+  calcName() {
+    return this.playerName;
+  }
+
+  get health() {
+    return this.calcHealth();
+  }
+  calcHealth() {
+    return this.playerHP;
+  }
+
+  get atk() {
+    return this.calcATK();
+  }
+  calcATK() {
+    return this.playerATK;
+  }
+
+  get def() {
+    return this.calcDEF();
+  }
+  calcDEF() {
+    return this.playerDEF;
+  }
+
+  get luk() {
+    return this.calcLUK();
+  }
+  calcLUK() {
+    return this.playerLUK;
+  }
+
+  get magic() {
+    return this.calcMGC();
+  }
+  calcMGC() {
+    return this.playerMGC;
+  }
+
+  get speed() {
+    return this.calcSPD();
+  }
+  calcSPD() {
+    return this.playerSPD;
+  }
+
+  get exp() {
+    return this.calcEXP();
+  }
+  calcEXP() {
+    return this.playerEXP;
+  }
+
+  get lvl() {
+    return this.calcLVL();
+  }
+  calcLVL() {
+    return this.playerLVL;
+  }
+}
+
+const vapor = new Player('Vapor', 300, 10, 10, 5, 5, 5, 0, 1);
+
+class Monster {
+  constructor(enemyName, enemyHP, enemyATK, enemyDEF, enemyLUK, enemyMGC, enemySPD, expGive, enemyCash) {
+    this.enemyName = enemyName;
+    this.enemyHP = enemyHP;
+    this.enemyATK = enemyATK;
+    this.enemyDEF = enemyDEF;
+    this.enemyLUK = enemyLUK;
+    this.enemyMGC = enemyMGC;
+    this.enemySPD = enemySPD;
+    this.expGive = expGive;
+    this.enemyCash = enemyCash;
+  }
+
+  get name() {
+    return this.calcName();
+  }
+  calcName() {
+    return this.enemyName;
+  }
+
+  get health() {
+    return this.calcHealth();
+  }
+  calcHealth() {
+    return this.enemyHP;
+  }
+
+  get atk() {
+    return this.calcATK();
+  }
+  calcATK() {
+    return this.enemyATK;
+  }
+
+  get def() {
+    return this.calcDEF();
+  }
+  calcDEF() {
+    return this.enemyDEF;
+  }
+
+  get luk() {
+    return this.calcLUK();
+  }
+  calcLUK() {
+    return this.enemyLUK;
+  }
+
+  get magic() {
+    return this.calcMGC();
+  }
+  calcMGC() {
+    return this.enemyMGC;
+  }
+
+  get speed() {
+    return this.calcSPD();
+  }
+  calcSPD() {
+    return this.enemySPD;
+  }
+
+  get exp() {
+    return this.calcEXP();
+  }
+  calcEXP() {
+    return this.expGive;
+  }
+
+  get cash() {
+    return this.calcCash();
+  }
+  calcCash() {
+    return this.enemyCash;
+  }
+}
+
+const slime = new Monster('Slime', 250, 6, 6, 3, 2, 6, 15, 5);
+
+function chMvRED () {
+  let luckRED = Math.floor(Math.random() * 4);
+  let chRandRED = Math.random() * 11;
+  //console.log(chRand);
+  let chFactRED = (cmvRED / 88)
+  //console.log(chFact);
+  let chRED = (chRandRED * chFactRED) / 77;
+  //console.log(chRED);
+  switch (luckRED) {
+    case 0 :
+    cmvRED += chRED;
+    break;
+    case 1 :
+    cmvRED -= chRED;
+    break;
+    case 2 :
+    cmvRED += (chRED * Math.ceil(Math.random() * 5));
+    break;
+    case 3 :
+    cmvRED -= (chRED * Math.ceil(Math.random() * 5));
+    break;
+    default:
+    console.log('error');
+    break;
+  }
+}
+
+function chMvBLU () {
+  luckBLU = Math.floor(Math.random() * 4);
+  chRandBLU = Math.random() * 10;
+  //console.log(chRand);
+  chFactBLU = (cmvBLU / 99)
+  //console.log(chFact);
+  chBLU = (chRandBLU * chFactBLU) / 66;
+  //console.log(chBLU);
+  switch (luckBLU) {
+    case 0 :
+    cmvBLU += chBLU;
+    break;
+    case 1 :
+    cmvBLU -= chBLU;
+    break;
+    case 2 :
+    cmvBLU += (chBLU * Math.ceil(Math.random() * 5));
+    break;
+    case 3 :
+    cmvBLU -= (chBLU * Math.ceil(Math.random() * 5));
+    break;
+    default:
+    console.log('error');
+    break;
+  }
+}
+
+function chMvYEL () {
+  luckYEL = Math.floor(Math.random() * 4);
+  chRandYEL = Math.random() * 12;
+  //console.log(chRand);
+  chFactYEL = (cmvYEL / 77)
+  //console.log(chFact);
+  chYEL = (chRandYEL * chFactYEL) / 99;
+  //console.log(chYEL);
+  switch (luckYEL) {
+    case 0 :
+    cmvYEL += chYEL;
+    break;
+    case 1 :
+    cmvYEL -= chYEL;
+    break;
+    case 2 :
+    cmvYEL += (chYEL * Math.ceil(Math.random() * 5));
+    break;
+    case 3 :
+    cmvYEL -= (chYEL * Math.ceil(Math.random() * 5));
+    break;
+    default:
+    console.log('error');
+    break;
+  }
+}
+
+function howMuch (curr) {
+
+  chMvRED();
+  chMvBLU();
+  chMvYEL();
+
+  valRED = cmvRED * amtRED;
+  valBLU = cmvBLU * amtBLU;
+  valYEL = cmvYEL * amtYEL;
+
+  totalFunds = valRED + valBLU + valYEL + trustFund + cashVal;
+
+  pctRED = (valRED / totalFunds) * 100;
+  pctBLU = (valBLU / totalFunds) * 100;
+  pctYEL = (valYEL / totalFunds) * 100;
+  pcttrust = (trustFund / totalFunds) * 100;
+  pctCash = (cashVal / totalFunds) * 100;
+
+  switch (curr)
+  {
+    case 'RED' :
+    console.log(`You currently have a total of ${amtRED.toFixed(4)} RED, which is valued at $${valRED.toFixed(2)} in cash with a market rate of $${cmvRED.toFixed(4)}.`);
+    break;
+    case 'BLU' :
+    console.log(`You currently have a total of ${amtBLU.toFixed(4)} BLU, which is valued at $${valBLU.toFixed(2)} in cash with a market rate of $${cmvBLU.toFixed(4)}.`);
+    break;
+    case 'YEL' :
+    console.log(`You currently have a total of ${amtYEL.toFixed(4)} YEL, which is valued at $${valYEL.toFixed(2)} in cash with a market rate of $${cmvYEL.toFixed(4)}.`);
+    break;
+    case 'cash' :
+    console.log(`You currently have a total of ${cashVal.toFixed(2)} in cash.`);
+    break;
+    case 'trust' :
+    console.log(`You currently have a total of $${trustFund.toFixed(2)} in your trust.`);
+    break;
+    default:
+    console.log('Not a valid currency!');
+    break;
+  }
+}
+
+function wallet () {
+
+  chMvRED();
+  chMvBLU();
+  chMvYEL();
+
+  valRED = cmvRED * amtRED;
+  valBLU = cmvBLU * amtBLU;
+  valYEL = cmvYEL * amtYEL;
+
+  totalFunds = valRED + valBLU + valYEL + trustFund + cashVal;
+
+  pctRED = (valRED / totalFunds) * 100;
+  pctBLU = (valBLU / totalFunds) * 100;
+  pctYEL = (valYEL / totalFunds) * 100;
+  pcttrust = (trustFund / totalFunds) * 100;
+  pctCash = (cashVal / totalFunds) * 100;
+
+  console.log(`You currently have a $${totalFunds.toFixed(2)} total balance.\n`);
+
+  howMuch('RED');
+  howMuch('BLU');
+  howMuch('YEL');
+  howMuch('cash');
+  howMuch('trust');
+
+  console.log(`${pctRED.toFixed(2)}% of your funds are RED.\n`);
+  console.log(`${pctBLU.toFixed(2)}% of your funds are BLU.\n`);
+  console.log(`${pctYEL.toFixed(2)}% of your funds are YEL.\n`);
+  console.log(`${pctCash.toFixed(2)}% of your funds are cash.\n`);
+  console.log(`${pcttrust.toFixed(2)}% of your funds are in trust.\n`);
+}
+
+function buyRED (buyAMT) {
+
+  chMvRED();
+  chMvBLU();
+  chMvYEL();
+
+  if (cashVal >= (cmvRED * buyAMT))
+  {
+    let purchRED = cmvRED * buyAMT;
+    cashVal -= purchRED;
+    amtRED += buyAMT;
+    valRED = cmvRED * amtRED;
+    totalFunds = valRED + valBLU + valYEL + trustFund + cashVal;
+    pctRED = (valRED / totalFunds) * 100;
+    console.log(`You bought ${buyAMT} RED for $${purchRED.toFixed(2)} cash! You now have ${amtRED.toFixed(4)} RED which is ${pctRED.toFixed(2)}% of the $${totalFunds.toFixed(2)} that make up your total funds.`);
+    cmvRED = cmvRED;
+    psRED = cmvRED;
+  }
+  else
+  {
+    console.log('You lack the funds to do that!');
+  }
+}
+
+function sellRED (saleAMT) {
+
+  chMvRED();
+  chMvBLU();
+  chMvYEL();
+
+  let priorSale = psRED * saleAMT;
+  if (saleAMT <= amtRED)
+  {
+    let saleRED = cmvRED * saleAMT;
+    let profit = saleRED - priorSale;
+    cashVal += saleRED;
+    amtRED -= saleAMT;
+    valRED = cmvRED * amtRED;
+    totalFunds = valRED + valBLU + valYEL + trustFund + cashVal;
+    pctRED = (valRED / totalFunds) * 100;
+    console.log(`You sold ${saleAMT} RED for $${saleRED.toFixed(2)} cash! You paid $${priorSale.toFixed(2)} for those RED, which means you made a $${profit.toFixed(2)} profit! You now have ${amtRED.toFixed(4)} RED which is ${pctRED.toFixed(2)}% of the $${totalFunds.toFixed(2)} that make up your total funds.`);
+    cmvRED = cmvRED;
+    totalProfit += profit;
+  }
+  else
+  {
+    console.log('You lack the funds to do that!');
+  }
+}
+
+function buyBLU (buyAMT) {
+
+  chMvRED();
+  chMvBLU();
+  chMvYEL();
+
+  if (cashVal >= (cmvBLU * buyAMT))
+  {
+    let purchBLU = cmvBLU * buyAMT;
+    cashVal -= purchBLU;
+    amtBLU += buyAMT;
+    valBLU = cmvBLU * amtBLU;
+    totalFunds = valRED + valBLU + valYEL + trustFund + cashVal;
+    pctBLU = (valBLU / totalFunds) * 100;
+    console.log(`You bought ${buyAMT} BLU for $${purchBLU.toFixed(2)} cash! You now have ${amtBLU.toFixed(4)} BLU which is ${pctBLU.toFixed(2)}% of the $${totalFunds.toFixed(2)} that make up your total funds.`);
+    cmvBLU = cmvBLU;
+    psBLU = cmvBLU;
+  }
+  else
+  {
+  console.log('You lack the funds to do that!');
+  }
+}
+
+function sellBLU (saleAMT) {
+
+  chMvRED();
+  chMvBLU();
+  chMvYEL();
+
+  let priorSale = psBLU * saleAMT;
+  if (saleAMT <= amtBLU)
+  {
+    let saleBLU = cmvBLU * saleAMT;
+    let profit = saleBLU - priorSale;
+    cashVal += saleBLU;
+    amtBLU -= saleAMT;
+    valBLU = cmvBLU * amtBLU;
+    totalFunds = valRED + valBLU + valYEL + trustFund + cashVal;
+    pctBLU = (valBLU / totalFunds) * 100;
+    console.log(`You sold ${saleAMT} BLU for $${saleBLU.toFixed(2)} cash! You paid $${priorSale.toFixed(2)} for those BLU, which means you made a $${profit.toFixed(2)} profit! You now have ${amtBLU.toFixed(4)} BLU which is ${pctBLU.toFixed(2)}% of the $${totalFunds.toFixed(2)} that make up your total funds.`);
+    cmvBLU = cmvBLU;
+    totalProfit += profit;
+  }
+  else
+  {
+  console.log('You lack the funds to do that!');
+  }
+}
+
+function buyYEL (buyAMT) {
+
+  chMvRED();
+  chMvBLU();
+  chMvYEL();
+
+  if (cashVal >= (cmvYEL * buyAMT))
+  {
+    let purchYEL = cmvYEL * buyAMT;
+    cashVal -= purchYEL;
+    amtYEL += buyAMT;
+    valYEL = cmvYEL * amtYEL;
+    totalFunds = valRED + valBLU + valYEL + trustFund + cashVal;
+    pctYEL = (valYEL / totalFunds) * 100;
+    console.log(`You bought ${buyAMT} YEL for $${purchYEL.toFixed(2)} cash! You now have ${amtYEL.toFixed(4)} YEL which is ${pctYEL.toFixed(2)}% of the $${totalFunds.toFixed(2)} that make up your total funds.`);
+    cmvYEL = cmvYEL;
+    psYEL = cmvYEL;
+  }
+  else
+  {
+  console.log('You lack the funds to do that!');
+  }
+}
+
+function sellYEL (saleAMT) {
+
+  chMvRED();
+  chMvBLU();
+  chMvYEL();
+
+  let priorSale = psYEL * saleAMT;
+  if (saleAMT <= amtYEL)
+  {
+    let saleYEL = cmvYEL * saleAMT;
+    let profit = saleYEL - priorSale;
+    cashVal += saleYEL;
+    amtYEL -= saleAMT;
+    valYEL = cmvYEL * amtYEL;
+    totalFunds = valRED + valBLU + valYEL + trustFund + cashVal;
+    pctYEL = (valYEL / totalFunds) * 100;
+    console.log(`You sold ${saleAMT} YEL for $${saleYEL.toFixed(2)} cash! You paid $${priorSale.toFixed(2)} for those YEL, which means you made a $${profit.toFixed(2)} profit! You now have ${amtYEL.toFixed(4)} YEL which is ${pctYEL.toFixed(2)}% of the $${totalFunds.toFixed(2)} that make up your total funds.`);
+    cmvYEL = cmvYEL;
+    totalProfit += profit;
+  }
+  else
+  {
+  console.log('You lack the funds to do that!');
+  }
+}
+
+function experience (player) {
+  let lvl = player.lvl;
+  //console.log(lvl);
+  let exp = player.exp;
+  //console.log(exp);
+  let expToNext = (lvl * (1800 / 8)) + (lvl * 10);
+  //console.log(expToNext);
+
+  lvlUp = exp + expToNext;
+  //console.log(expToNext);
+
+  return lvlUp;
+}
+
+const help = () => {
+  console.log('To buy some coin: Type "buy" followed by the coin type (RED, BLU, YEL) and then the amount you like to buy in perentesis. Example - buyRED(2)\n');
+  console.log('To sell some coin: Type "sell" followed by the coin type (RED, BLU, YEL) and then the amount you like to sell in perentesis. Example - sellYEL(20)\n');
+  console.log('To check your wallet: Type "wallet" followed by perentesis. Example - wallet()\n');
+  console.log('To check a players stats: Type "stats" followed by the players name in perentesis. Example - stats(vapor)\n');
+}
+
+const stats = player => {
+  console.log(`${player.name}'s Stats:\n`);
+
+  console.log(`LEVEL = ${player.lvl}.\n`);
+  console.log(`HEALTH = ${player.health}.\n`);
+  console.log(`ATTACK = ${player.atk}.\n`);
+  console.log(`DEFENSE = ${player.def}.\n`);
+  console.log(`LUCK = ${player.luk}.\n`);
+  console.log(`MAGIC = ${player.magic}.\n`);
+  console.log(`TOTAL EXP = ${player.exp}.\n`);
+}
+
+const nextLVL = player => {
+  exp = player.playerEXP;
+  level = player.playerLVL;
+  hp = player.playerHP;
+  atk = player.playerATK;
+  def = player.playerDEF;
+  luk = player.playerLUK;
+  magic = player.playerMGC;
+
+  //console.log(lvlUp);
+  //console.log(exp);
+  if (exp > lvlUp) {
+    level += 1;
+    player.playerLVL = level;
+    console.log(`Congrats! You're now level ${level}!`);
+    hp += Math.Floor((hp * .1) + 5 + level);
+    atk += Math.floor((atk * .1) + 2 + (level / 3));
+    def += Math.floor((def * .1) + 2 + (level / 3));
+    luk += Math.floor((luk * .1) + 1 (level / 5));
+    magic += Math.floor((magic * .1) + 1 + (level / 4));
+
+    player.playerHP = hp;
+    player.playerATK = atk;
+    player.playerDEF = def;
+    player.playerLUK = luk;
+    player.playerMGC = magic;
+
+  } else {
+    let toNextLVL = lvlUp - exp;
+    console.log(`You need ${toNextLVL} more exp to level up!`)
+  }
+}
+
+const battle = (player, monster) => {
+
+  let hp = player.health;
+  let atk = player.atk;
+  let def = player.def;
+  let luk = player.luk;
+  let magic = player.magic;
+  let speed = player.speed;
+  let exp = player.exp;
+  let level = player.lvl;
+
+  let hpM = monster.health;
+  let atkM = monster.atk;
+  let defM = monster.def;
+  let lukM = monster.luk;
+  let magicM = monster.magic;
+  let speedM = monster.speed;
+  let expM = monster.exp;
+  let cashM = monster.cash;
+
+  let round = 1;
+
+  while (hp > 0 && hpM > 0) {
+
+    let test01;
+    let test02;
+    let power01;
+    let block01;
+    let p1Dmg;
+    let p1Luck;
+    let dmgFactor01;
+
+    let test03;
+    let test04;
+    let power02;
+    let block02;
+    let p2Dmg;
+    let p2Luck;
+    let dmgFactor02
+
+    //p1:
+    test01 = (Math.random() * 100);
+    //console.log(test01);
+    test02 = luk * .2;
+    //console.log(test02);
+    dmgFactor01 = test01 + test02;
+    //console.log(dmgFactor01);
+    power01 = (dmgFactor01 / 3) * atk;
+    //console.log(power01);
+    block01 = def * (dmgFactor01 / 6);
+    //console.log(block01);
+    p1Luck = Math.floor(dmgFactor01 / 10);
+    //console.log(p1Luck);
+
+    //p2:
+    test03 = (Math.random() * 100);
+    //console.log(test03);
+    test04 = lukM * .2;
+    //console.log(test04);
+    dmgFactor02 = test03 + test04;
+    //console.log(dmgFactor02);
+    power02 = (dmgFactor02 / 3) * atkM;
+    //console.log(power02);
+    block02 = defM * (dmgFactor02 / 6);
+    //console.log(block02);
+    p2Luck = Math.floor(dmgFactor02 / 10);
+    //console.log(p2Luck);
+
+    console.log(`Round ${round}:`);
+
+    //p1 attack
+    if (speed >= speedM) {
+      p1Dmg = power01 - block02;
+      if (p1Dmg > 0) {
+        hpM -= p1Dmg;
+      } else {
+        p1Dmg = 0;
+      }
+      //console.log(hpM);
+
+    switch (p1Luck) {
+      case 11 :
+      console.log(`${player.name} attacks, what LUCK! It's a one shot kill.`);
+      hpM = 0;
+      break;
+      case 10 :
+      console.log(`${player.name} attacks, it's a perfect strike! 40% bonus damage!`);
+      hpM -= (p1Dmg * .4);
+      break;
+      case 9 :
+      console.log(`${player.name} attacks and it's a MASSIVE blow!`);
+      break;
+      case 8 :
+      console.log(`${player.name} attacks with amazing finesse!`);
+      break;
+      case 7 :
+      console.log(`${player.name} hits with a strong attack!`);
+      break;
+      case 6 :
+      console.log(`${player.name} lands a decent attack!`);
+      break;
+      case 5 :
+      console.log(`${player.name} attacks!`);
+      break;
+      case 4 :
+      console.log(`${player.name} attacks, it's a glancing blow.`);
+      break;
+      case 3 :
+      console.log(`${player.name} attacks, he had no energy in that one.`);
+      break;
+      case 2 :
+      console.log(`${player.name} attacks, he's looking tired out there.`);
+      break;
+      case 1 :
+      console.log(`${player.name} practically misses...`);
+      break;
+      case 0 :
+      console.log(`${player.name} misses!`);
+      break;
+      default:
+      console.log('error');
+      break;
+    }
+
+    if (hpM <= 0) {
+      console.log(`${monster.name} takes ${Math.floor(p1Dmg)} damage and drops dead!\n`);
+      }
+    if (p1Luck != 0 && hpM >= 0) {
+      console.log(`${monster.name} takes ${Math.floor(p1Dmg)} damage and has ${Math.floor(hpM)}hp remaining.\n`);
+    }
+  } else if (hpM >= 1) {
+
+    //p2 attack
+
+    p2Dmg = power02 - block01;
+    if (p2Dmg > 0) {
+      hp -= p2Dmg;
+    } else {
+      p2Dmg = 0;
+    }
+    //console.log(hp);
+
+    switch (p2Luck) {
+      case 11 :
+      console.log(`${monster.name} attacks, what LUCK! It's a one shot kill.`);
+      hp = 0;
+      break;
+      case 10 :
+      console.log(`${monster.name} attacks, it's a perfect strike! 40% bonus damage!`);
+      hp -= (p2Dmg * .4);
+      break;
+      case 9 :
+      console.log(`${monster.name} attacks and it's a MASSIVE blow!`);
+      break;
+      case 8 :
+      console.log(`${monster.name} attacks with amazing finesse!`);
+      break;
+      case 7 :
+      console.log(`${monster.name} hits with a strong attack!`);
+      break;
+      case 6 :
+      console.log(`${monster.name} lands a decent attack!`);
+      break;
+      case 5 :
+      console.log(`${monster.name} attacks!`);
+      break;
+      case 4 :
+      console.log(`${monster.name} attacks, it's a glancing blow.`);
+      break;
+      case 3 :
+      console.log(`${monster.name} attacks, he had no energy in that one.`);
+      break;
+      case 2 :
+      console.log(`${monster.name} attacks, he's looking tired out there.`);
+      break;
+      case 1 :
+      console.log(`${monster.name} practically misses...`);
+      break;
+      case 0 :
+      console.log(`${monster.name} misses!`);
+      break;
+      default:
+      console.log('error');
+      break;
+    }
+
+    if (hp <= 0) {
+      console.log(`${player.name} takes ${Math.floor(p2Dmg)} damage and drops dead!\n`);
+    }
+    if (p2Luck != 0 && hp >= 0) {
+        console.log(`${player.name} takes ${Math.floor(p2Dmg)} damage and has ${Math.floor(hp)}hp remaining.\n`);
+      }
+    }
+    if (hp >= 1 && speed < speedM) {
+      p1Dmg = power01 - block02;
+      hpM -= p1Dmg;
+      //console.log(hpM);
+
+      switch (p1Luck) {
+        case 11 :
+        console.log(`${player.name} attacks, what LUCK! It's a one shot kill.`);
+        hpM = 0;
+        break;
+        case 10 :
+        console.log(`${player.name} attacks, it's a perfect strike! 40% bonus damage!`);
+        hpM -= (p1Dmg * .4);
+        break;
+        case 9 :
+        console.log(`${player.name} attacks and it's a MASSIVE blow!`);
+        break;
+        case 8 :
+        console.log(`${player.name} attacks with amazing finesse!`);
+        break;
+        case 7 :
+        console.log(`${player.name} hits with a strong attack!`);
+        break;
+        case 6 :
+        console.log(`${player.name} lands a decent attack!`);
+        break;
+        case 5 :
+        console.log(`${player.name} attacks!`);
+        break;
+        case 4 :
+        console.log(`${player.name} attacks, it's a glancing blow.`);
+        break;
+        case 3 :
+        console.log(`${player.name} attacks, he had no energy in that one.`);
+        break;
+        case 2 :
+        console.log(`${player.name} attacks, he's looking tired out there.`);
+        break;
+        case 1 :
+        console.log(`${player.name} practically misses...`);
+        break;
+        case 0 :
+        console.log(`${player.name} misses!`);
+        hpM += p1Dmg;
+        break;
+        default:
+        console.log('error');
+        break;
+      }
+
+      if (hpM <= 0) {
+        console.log(`${monster.name} takes ${Math.floor(p1Dmg)} damage and drops dead!\n`);
+        }
+      if (p1Luck != 0 && hpM >= 0) {
+        console.log(`${monster.name} takes ${Math.floor(p1Dmg)} damage and has ${Math.floor(hpM)}hp remaining.\n`);
+      }
+
+    }
+
+    round += 1;
+  }
+
+  if (hp >= 1) {
+    console.log(`${player.name} wins`);
+    exp += expM;
+    console.log(`You gained ${expM} exp!`);
+    experience(player);
+    player.playerEXP = exp;
+    //console.log(player.exp);
+    player.playerLVL = level;
+    //console.log(player.lvl);
+    cashVal += cashM;
+    console.log(`The ${monster.name} dropped $${cashM} cash!`);
+
+    nextLVL(player);
+  }
+  if (hpM >= 1) {
+    console.log(`${monster.name} wins, you are dead!`);
+  }
+
+
+  chMvRED();
+  chMvBLU();
+  chMvYEL();
+}
+
+//--------------------------------------------
+
+chMvRED();
+chMvBLU();
+chMvYEL();
+
+const host01 = 'Terry'
+
+console.log(`${host01}: Well, I see you have a little cash on ya pal...but you need some coin! Here, let me help. You'll wanna make sure you keep a nice supply of RED, BLU, and YEL along with your cash.\n`);
+
+buyRED(.08);
+buyBLU(2);
+buyYEL(2000);
+
+console.log(`${host01}: There you go pal. Now just be sure to keep an eye on the market values for each coin, they fluctuate often. There's also some events and choices you make that will impact their values. Oh, and don't forget, sometimes only a specific coin can be used to make purchases, where other times you may only use cash!\n`);
+
+chMvRED();
+chMvBLU();
+chMvYEL();
+
+console.log(`${host01}: Let's take a peak at your wallet now!\n`);
+
+wallet();
+
+console.log(`${host01}: Sweet digs! Look, the values of your coin have already changed! Keep in mind you can buy more coin for cash, or sell off some of your coin for cash at anytime. Not to mention check your wallet. Just type "help()" for more details!\n`);
+
+let trig01 = false;
+
+alert('Do you want to proceed?');
+
+trig01 = true;
+
+if (trig01 === true) {
+console.log('A little slime approaches! Prepare to battle!');
+
+battle(vapor, slime);
+
+console.log(`${host01}: Oh, yeah...I should have probably mentioned that you can be attacked by monsters, or go kill them on your own will. They will give you experience towards your next level and drop cash, and sometimes even items!\n`);
+}
+
+//------------------------------------------------------------------
+//GAME START:
+//------------------------------------------------------------------
